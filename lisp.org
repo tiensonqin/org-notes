@@ -1,0 +1,6 @@
+* Lisp essays
+** [[http://www-formal.stanford.edu/jmc/recursive/recursive.html][Recursive Functions of Symbolic Expressions and Their Computation by Machine]]
+   By: John Mccarthy
+   
+** [[http://www.paulgraham.com/rootsoflisp.html][The Roots Of Lisp]]
+   By: Paul Graham
