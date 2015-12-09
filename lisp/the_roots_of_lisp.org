@@ -1,0 +1,144 @@
+** [[http://www.paulgraham.com/rootsoflisp.html][The Roots Of Lisp]]
+   By: Paul Graham
+
+*** 7 primitives
+    Note: no if, let, lambda
+**** quote
+
+**** atom
+
+**** eq
+
+**** car
+
+**** cdr
+
+**** cons
+
+**** cond
+
+*** Denoting Functions
+
+**** lambda
+     (lambda (p1 ... pn) e)
+     ((lambda (p1 ... pn) e) a1 ... an)
+
+**** label
+     Enable function to refer to itself, thereby provide a convenient way
+     to define recursive functions.
+     (label f (lambda (p1 ... pn) e))
+
+**** defun
+     f = (label f (lambda (p1 ... pn) e))
+     (defun f (p1 ... pn) e)
+
+*** Some Functions
+
+**** abbr
+     (cadr e) = (car (cdr e)
+
+**** list
+     (list 'a 'b 'c) = (cons 'a (cons 'b (cons 'c ())))
+
+**** null.
+     tests whether its argument is the empty list.
+
+     #+BEGIN_SRC lisp
+       (defun null. (x)
+         (eq x '()))
+     #+END_SRC
+
+**** and.
+     returns t if both its arguments do and () otherwise.
+
+     #+BEGIN_SRC lisp
+       (defun and. (x y)
+         (cond (x (cond y 't) ('t '()))
+               ('t '())))
+     #+END_SRC
+
+**** not.
+     returns t if its argument return (), and () if argument returns t
+
+     #+BEGIN_SRC lisp
+       (defun not. (x)
+         (cond (x '())
+               ('t 't)))
+     #+END_SRC
+
+**** append. [clojure concat]
+     takes two lists and returns their concatenation.
+
+     #+BEGIN_SRC lisp
+       (defun append. (x y)
+         (cond ((null. x) y)
+               ('t (cons (car x) (append. (cdr x) y)))))
+     #+END_SRC
+
+**** pair. [clojure zipmap]
+     takes two lists of the same length and returns a list of two-element
+     lists containing successive pairs of an element from each.
+
+     #+BEGIN_SRC lisp
+       (defun pair. (x y)
+         (cond ((and. (null. x) (null. y)) '())
+               ((and. (not. (atom x)) (not. (atom y)))
+                (cons (list (car x) (car y))
+                      (pair. (cdr x) (cdr y))))))
+     #+END_SRC
+
+**** assoc. [clojure get]
+     takes an atom x and a list y of the form created by pair.,
+     and returns the second element of the first list in y whose
+     first element is x.
+
+     #+BEGIN_SRC lisp
+       (defun assoc. (x y)
+         (cond ((eq (caar y) x) (cadar y))
+               ('t (assoc. x (cdr y)))))
+     #+END_SRC
+
+*** The Surprise (eval)
+    a function that acts as an interpreter for our language: a function
+    that takes an argument any Lisp expression, and return its value.
+
+    #+BEGIN_SRC lisp
+      (defun eval. (e a)
+        (cond
+         ((atom e) (assoc. e a))
+         ((atom (car e))
+          (cond
+           ((eq (car e) 'quote) (cadr e))
+           ((eq (car e) 'atom)  (atom (eval. (cadr e) a)))
+           ((eq (car e) 'eq)    (eq   (eval. (cadr e) a)
+                                      (eval. (caddr e) a)))
+           ((eq (car e) 'car)   (car  (eval. (cadr e) a)))
+           ((eq (car e 'cdr)    (cdr  (eval. (cadr e) a))))
+           ((eq (car e 'cons)   (cons (eval. (cadr e) a)
+                                      (eval. (caddr e) a))))
+           ((eq (car e) 'cond) (evcon. (cdr e) a))
+           ('t (eval. (cons (assoc. (car e) a)
+                            (cdr e))
+                      a))))
+         ((eq (caar e) 'label)
+          (eval. (cons (caddar e) (cdr e))
+                 (cons (list (cadar e) (car e)) a)))
+         ((eq (caar e) 'lambda)
+          (eval. (caddar e)
+                 (append. (pair. (cadar e) (evlis. (cdr e) a))
+                          a)))))
+
+      (defun evcon. (c a)
+        (cond ((eval. (caar c) a)
+               (eval. (cadar c) a))
+              ('t (evcon. (cdr c) a))))
+
+      (defun evlis. (m a)
+        (cond ((null. m) '())
+              ('t (cons (eval. (car m) a)
+                        (evlis. (cdr m) a)))))
+    #+END_SRC
+
+*** Questions
+
+**** What is Y combinator

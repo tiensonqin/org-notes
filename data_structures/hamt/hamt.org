@@ -1,0 +1,28 @@
+* HAMT
+  Hash Array Mapped Trie, The author, Phil Bagwell, wrote two papers
+  related to the subject:
+
+  1. [[https://idea.popcount.org/2012-07-25-introduction-to-hamt/triesearches.pdf][Fast And Space Efficient Trie Searches, 2000]]
+     In this paper the author is comparing various implementations of Tries
+     and introduces Array Mapped Trie.
+  2. [[https://idea.popcount.org/2012-07-25-introduction-to-hamt/idealhashtrees.pdf][Ideal Hash Trees, 2001 ]]
+     This paper describes using Array Mapped Trie as a good data structure
+     for a generic [[https://en.wikipedia.org/wiki/Hash_table][hash table]].
+
+  See also [[https://idea.popcount.org/2012-07-25-introduction-to-hamt/][Introduction to HAMT]]
+
+** Clojure implemenation
+
+*** [[http://hypirion.com/][Understanding Clojure's Persistent Vectors series]]
+   1. [[http://hypirion.com/musings/understanding-persistent-vector-pt-1][basics]]
+   2. [[http://hypirion.com/musings/understanding-persistent-vector-pt-2][indexing]]
+   3. [[http://hypirion.com/musings/understanding-persistent-vector-pt-3][tail]]
+   4. [[http://hypirion.com/musings/understanding-clojure-transients][transients]]
+   5. [[http://hypirion.com/musings/persistent-vector-performance-summarised][perf]]
+   6. [[http://hypirion.com/musings/persistent-vector-performance-summarised][summarized]]
+
+** Prefix trie vs binary search tree
+
+** bitmap + subtrie
+
+** popcount

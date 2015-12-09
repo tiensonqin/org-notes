@@ -1,0 +1,5 @@
+* Lambda
+
+** [[http://en.wikipedia.org/wiki/Lambda_calculus][Lambda Calculus]]
+
+** [[http://en.wikipedia.org/wiki/Church_encoding][Church Encoding]]

@@ -1,0 +1,120 @@
+** [[http://www-formal.stanford.edu/jmc/recursive/recursive.html][Recursive Functions of Symbolic Expressions and Their Computation by Machine]]
+   By: John Mccarthy
+
+*** History
+    LISP (for LISt Processor) developed for IBM 704 by AI group at MIT,
+    based on a scheme for representing the partial recursive functions of
+    a certain class of symbolic expressions.
+    S-expressions in the memory of 704 by list structures,
+    S-functions by program
+
+*** Functions
+
+**** Partial Functions
+
+**** Propositional Expressions and Predicates
+
+**** Conditional Expressions
+     (p1 -> e1, ..., pn -> en)
+**** Recursive Function Definitions
+     n! = (n = 0 -> 1, T -> n * (n - 1)!)
+**** Functions and Forms
+     lambda notation
+**** Expressions for Recursive Functions
+     label(a, e)
+
+*** Recursive Functions of Symbolic Expressions
+
+**** A Class of Symbolic Expressions
+     1. formed by . ( ) and atomic symbols
+     2. (m) stands for (m . NIL)
+     3. (m1, ..., mn) stands for (m. . (...(mn . NIL) ...))
+     4. regard the expressions with commas as abbreviations for those
+        not involving commas, we refer theme all as S-expressions.
+
+**** Functions of S-expressions and The Expressions That Represent Them.
+     M-expressions (meta-expressions)
+
+**** The Elementary S-functions and Predicates.
+     All computable functions
+     compare to the roots of lisp, without quote and cond
+***** atom
+      atom[x] has the value of T or F according to whether x is an atomic symbol.
+
+***** eq
+      eq[x;y] is defined if and only if both x and y are atomic.
+      eq[X; (X . A)] is undefined.
+
+***** car
+      car[x] is defined if and only if x is not atomic, car[(e1 . e2)] = e1.
+
+***** cdr
+      cdr[x] is also defined when x is not atomic, cdr[(e1 . e2)] = e2.
+
+***** cons
+      cons[x; y] is defined for any x and y. cons[e1;e2] = (e1 . e2)
+
+**** Recursive S-functions
+
+***** ff[x]
+      The value of ff[x] is the first atomic symbol of the S-expression x with
+      the parentheses ignored.
+
+      Defined as:
+      ff[x] = [atom[x] -> x; t -> ff[car[x]]]
+
+      For example:
+      ff[((A . B) .  C)] = A
+
+***** subset[x;y;z]
+      This function gives the result of substituting the S expression x for
+      all occurrences of the atomic symbol y in the S-expression z.
+
+      Defined as:
+      subst[x; y; z] = [atom [z] -> [eq [z; y] -> x; T -> z];
+      T -> cons [subst [x; y; car[z]]; subst[x; y; cdr[z]]]]
+
+      For example:
+      subst[(X . A);B;((A . B) . C)] = ((A . (X . A)) . C)
+
+***** equal[x;y]
+      This is a predicate that has the value T if x and y are the same
+      S-expression, and has the value F otherwise.
+
+      Defined as:
+      equal[x; y] = [atom[x] and atom[y] and eq[x; y]]
+
+***** null[x]
+      atom[x] or eq[x; NIL]
+
+***** append[x;y]
+      append[x; y] = [null[x] -> y; T -> cons [car[x]; append[cdr[x]; y]]]
+
+***** among[x;y]
+      This predicate is true if the S-expression x occurs among the element the list y.
+
+***** pair[x;y]
+
+***** assoc[x;y]
+
+***** sublis[x;y]
+
+**** Representations of S-Functions by S-Expressions.
+
+***** rule for translating M-expressions into S-expressions
+      1. if e is S-expression, (QUOTE e)
+      2. variables and function names upper-case
+      3. a form f[e1;...;en] is translated to (f*, e1* ..., en*)
+      4. {[p1 -> e1; ... ; pn -> en]}* is (COND, (p1*, e1*), ..., (pn* . en*)).
+      5. notation to LAMBDA
+      6. label to LABEL
+
+**** The universal S-Function apply
+     apply[f;args] = eval[cons [f; appq[args]]; NIL]
+
+**** Functions with Functions as Arguments
+     map
+
+*** The LISP Programming System
+    The prohibition against circular list structures is essentially a prohibition
+    against an expression being an subexpression of itself.
