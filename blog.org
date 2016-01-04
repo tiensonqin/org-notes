@@ -1,0 +1,26 @@
+* Blogs
+** [[https://aphyr.com/][Aphyr]]
+*** [[https://aphyr.com/posts/313-strong-consistency-models][Strong consistency models]]
+**** Notes
+     1. We can use compare-and-set as the basis for mutexes, semaphores,
+        channels, counters, lists, sets, maps, trees–all kinds of shared
+        data structures become available.
+
+**** ?
+     1. linearizability != read write lock
+** [[http://blog.fogus.me/][Send More Paramedics: fogus]]
+** [[http://swannodette.github.io/][dosync]]
+** [[http://blog.ezyang.com/][ezyang]]
+** [[http://www.cliffc.org/blog/][Cliff Click]]
+** [[http://insideclojure.org/archive][Inside Clojure]]
+** [[http://www.eternallyconfuzzled.com/Tutorials.aspx][Eternally Confuzzled]]
+** [[http://adtinfo.org/][Ben Pfaff]]
+
+** [[https://simbo1905.wordpress.com/][SLASH DEV SLASH NULL]]
+*** [[https://simbo1905.wordpress.com/2014/10/05/in-defence-of-the-paxos-consensus-algorithm/][The Trial Of Paxos Algorithm]]
+
+** [[http://horicky.blogspot.co.id/][Pragmatic Programming Techniques]]
+*** Author: Ricky Ho
+
+** Serials
+*** [[http://codecapsule.com/2012/11/07/ikvs-implementing-a-key-value-store-table-of-contents/][Implementing a Key-Value Store]]

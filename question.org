@@ -1,0 +1,5 @@
+* Questions
+** Bit operations
+*** DONE x / power == x >>> n
+    CLOSED: [2015-12-10 Thu 11:26]
+*** TODO x % power == x & (power - 1)
